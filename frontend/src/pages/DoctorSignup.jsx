@@ -12,6 +12,7 @@ const DoctorSignup = () => {
     password: "",
     profilePicture: null,
   });
+  const [isLoading, setIsLoading] = useState(false)
   const { login: loginLocally } = useAuthUpdate();
   const navigate = useNavigate()
   
@@ -40,6 +41,7 @@ const DoctorSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true)
       const res = await fetch(
         `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/doctors/signup`,
         {
@@ -64,6 +66,9 @@ const DoctorSignup = () => {
       }
     } catch (err) {
       alert(err.message)
+    }
+    finally {
+      setIsLoading(false)
     }
   };
 
@@ -139,7 +144,7 @@ const DoctorSignup = () => {
         />
         <br />
 
-        <button type="submit" className="submit-btn">Sign Up</button>
+        <button type="submit" className="submit-btn">{isLoading ? "Loading..." : "Signup"}Sign Up</button>
       </form>
     </div>
   );

@@ -13,6 +13,7 @@ const PatientSignup = () => {
     historyOfIllness: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false)
   const { login: loginLocally } = useAuthUpdate();
   const navigate = useNavigate()
 
@@ -40,6 +41,7 @@ const PatientSignup = () => {
     e.preventDefault();
 
     try {
+        setIsLoading(true)
         const res = await fetch(
           `${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/patients/signup`,
           {
@@ -65,20 +67,10 @@ const PatientSignup = () => {
     } catch (err) {
         alert(err.message)
     }
+    finally {
+      setIsLoading(false)
+    }
     
-    fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/patients/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...formData,
-        age: Number(formData.age),
-        phone: Number(formData.phone),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
   };
 
   return (
@@ -156,7 +148,7 @@ const PatientSignup = () => {
           required
         />
         <br />
-        <button className="submit-btn" type="submit">Sign Up</button>
+        <button className="submit-btn" type="submit">{isLoading ? "Loading..." : "Signup"}</button>
       </form>
     </div>
   );

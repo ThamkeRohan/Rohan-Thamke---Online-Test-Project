@@ -8,6 +8,8 @@ const Login = () => {
     password: "",
     role: "doctor", 
   });
+  const [isLoading, setIsLoading] = useState(false)
+
   const { login: loginLocally } = useAuthUpdate();
   const navigate = useNavigate()
 
@@ -19,6 +21,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        setIsLoading(true)
         const res = await fetch(`${import.meta.env.VITE_SERVER_BASE_URL}/api/auth/login`, {
           method: "POST",
           headers: {
@@ -42,6 +45,9 @@ const Login = () => {
         }
     } catch (err) {
         alert(err.message)
+    }
+    finally {
+      setIsLoading(false)
     }
   };
 
@@ -72,7 +78,7 @@ const Login = () => {
           <option value="patient">Patient</option>
         </select>
         <br />
-        <button type="submit" className="submit-btn">Login</button>
+        <button type="submit" className="submit-btn">{isLoading ? "Loading..." : "Login"}</button>
       </form>
     </div>
   );
