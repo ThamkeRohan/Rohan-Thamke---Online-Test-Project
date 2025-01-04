@@ -144,7 +144,7 @@ const DoctorSignup = () => {
         />
         <br />
 
-        <button type="submit" className="submit-btn">{isLoading ? "Loading..." : "Signup"}Sign Up</button>
+        <button type="submit" className="submit-btn">{isLoading ? "Loading..." : "Signup"}</button>
       </form>
     </div>
   );
