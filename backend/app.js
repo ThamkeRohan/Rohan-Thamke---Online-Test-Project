@@ -12,7 +12,12 @@ const prescriptionRoutes = require("./routes/prescription");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: process.env.CLIENT_BASE_URL, // Update with your client's origin
+  methods: ["GET", "POST", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 
 app.use("/api/auth", authRoutes);
